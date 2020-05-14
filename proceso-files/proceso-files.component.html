@@ -1,0 +1,28 @@
+<div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
+  <input [style.display]="'none'" type="file" #fileInput (change)="uploadFile($event.target.files)">
+</div>
+
+<div class="contenedor-files">
+  <div class="files" *ngFor="let file of filesSave;let i= index">
+    <div class="files-list">
+      <p> {{ file.nombreFile }} </p>
+      <button title="Eliminar archivo" *ngIf="!file.cargando " class="delete-file text-danger" (click)="deleteAttachment(i)">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+      <button title="Detener súbida" *ngIf="file.cargando" class="delete-file text-danger" (click)="cancelarPeticion(i)">
+        <i class="fas fa-stop"></i>
+      </button>
+    </div>
+    <div [style.width]="porcentaje + '%'" class="loading-files " *ngIf="file.cargando">
+      <p>Cargando ...</p>
+      <p><b>{{porcentaje}}</b></p>
+    </div>
+    <div class="complete-file" *ngIf="!file.cargando && file.estado ==1">
+      <p>Completado</p>
+      <p><b>100%</b></p>
+    </div>
+    <div class="error-file" *ngIf="!file.cargando && file.estado ==0">
+      <p>Error</p>
+    </div>
+  </div>
+</div>
